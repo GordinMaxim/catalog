@@ -88,7 +88,7 @@ void EsotericBook::accept(Visitor &v, int state) {
 	v.visit(this, state);
 }
 
-string Disk::ToString(typename Disk::DiskType diskType) {
+string Disk::ToString(Disk::DiskType diskType) {
 	switch (diskType) {
 		case Disk::CD : {
 			return "CD";
@@ -102,7 +102,7 @@ string Disk::ToString(typename Disk::DiskType diskType) {
 	return "";
 }
 
-string Disk::ToString(typename Disk::ContentType contentType) {
+string Disk::ToString(Disk::ContentType contentType) {
 	switch (contentType) {
 		case Disk::MUSIC : {
 			return "MUSIC";
