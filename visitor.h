@@ -2,10 +2,18 @@
 #define _VISITOR_H_
 
 #include <ostream>
-#include "product_tree.h"
+// #include "product_tree.h"
+#include "category.h"
 
 namespace catalog {
 using std::ostream;
+
+class Component;
+class ProgrammingBook;
+class CookBook;
+class EsotericBook;
+class Disk;
+// class Category<Component>;
 
 class Visitor {
 public:
@@ -16,8 +24,19 @@ public:
 	virtual void visit(Category<Component> *p) = 0;
 };
 
-class PrintVisitor : public Visitor;
+class PrintVisitor : public Visitor {
+	PrintVisitor(const ostream &os);
+	void visit(ProgrammingBook *p);
+	void visit(CookBook *p);
+	void visit(EsotericBook *p);
+	void visit(Disk *p);
+	void visit(Category<Component> *p);
+	virtual ~PrintVisitor() {}
 
-} // end namespace Catalog
+private:
+	ostream os_;
+};
 
-#endif /* _VISITOR_H_ */
+} 
+
+#endif  /* _VISITOR_H_ */
