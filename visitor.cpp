@@ -1,32 +1,48 @@
+#include <string>
 #include "visitor.h"
 
 namespace catalog {
 
-void PrintVisitor::visit(ProgrammingBook *p) {
-	os_ << "Programming Book (" << p->getProgrammingLanguage() << "): ";
-	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode() << std::endl;
+PrintVisitor::PrintVisitor(const std::ostream &os, char indentChar, int indentWidth) : 
+	os_(os.rdbuf()), indentChar_(indentChar), indentWidth_(indentWidth) {
 }
 
-void PrintVisitor::visit(CookBook *p) {
-	os_ << "Cook Book (" << p->getIngredient() << "): ";
-	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode() << std::endl;
+std::streambuf* PrintVisitor::reset(std::ostream &os) {
+	return os_.rdbuf(os.rdbuf());
 }
 
-void PrintVisitor::visit(EsotericBook *p) {
-	os_ << "Esoteric Book (Minimum age - " << p->getAge() << "): ";
-	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode() << std::endl;
+void PrintVisitor::visit(ProgrammingBook *p, int state) {
+	os_ << std::string(indentWidth_ * state, indentChar_);
+	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode();
+	os_ << " (" << p->getProgrammingLanguage() << ")" << std::endl;
 }
 
-void PrintVisitor::visit(Disk *p) {
-	os_ << "Disk (" << p->getDiskType() << ", " << p->getContentType() << "): ";
-	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode() << std::endl;
+void PrintVisitor::visit(CookBook *p, int state) {
+	os_ << std::string(indentWidth_ * state, indentChar_);
+	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode();
+	os_ << " (" << p->getIngredient() << ")" << std::endl;
 }
 
-void PrintVisitor::visit(Category<Component> *p) {
+void PrintVisitor::visit(EsotericBook *p, int state) {
+	os_ << std::string(indentWidth_ * state, indentChar_);
+	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode();
+	os_ << " (Minimum age - " << p->getAge() << ")" << std::endl;
+}
+
+void PrintVisitor::visit(Disk *p, int state) {
+	std::string diskType = Disk::ToString(p->getDiskType());
+	std::string contentType = Disk::ToString(p->getContentType());
+
+	os_ << std::string(indentWidth_ * state, indentChar_);
+	os_ << p->getName() << ", " << p->getPrice() << ", " << p->getBarcode();
+	os_ << " (" << diskType << ", " << contentType << ")" << std::endl;
+}
+
+void PrintVisitor::visit(Category<Component> *p, int state) {
+	os_ << std::string(indentWidth_ * state, indentChar_);
 	os_ << p->getName() << std::endl;
 	for (Category<Component>::ChildIterator it = p->begin(); it != p->end(); ++it) {
-		os_ << "\t";
-		(*it)->accept(*this);
+		(*it)->accept(*this, state + 1);
 	}
 }
 

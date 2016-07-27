@@ -4,9 +4,6 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-// #include "visitor.h"
-#include "product_tree.h"
-
 
 namespace catalog {
 using std::vector;
@@ -55,7 +52,7 @@ public:
 		children_.clear();
 	}
 
-	void accept(Visitor &v) {
+	void accept(Visitor &v, int state) {
 		// v.visit(this);
 	}
 

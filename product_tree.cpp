@@ -54,8 +54,8 @@ void ProgrammingBook::setProgrammingLanguage(const string &lang) {
 	lang_ = lang;
 } 
 
-void ProgrammingBook::accept(Visitor &v) {
-	v.visit(this);
+void ProgrammingBook::accept(Visitor &v, int state) {
+	v.visit(this, state);
 }
 
 CookBook::CookBook(const string &name, int price, const string &barcode, int pageNum, const string &ingredient) :
@@ -69,8 +69,8 @@ void CookBook::setIngredient(const string &ingredient) {
 	ingredient_ = ingredient;
 } 
 
-void CookBook::accept(Visitor &v) {
-	v.visit(this);
+void CookBook::accept(Visitor &v, int state) {
+	v.visit(this, state);
 }
 
 EsotericBook::EsotericBook(const string &name, int price, const string &barcode, int pageNum, int age) :
@@ -84,8 +84,40 @@ void EsotericBook::setAge(int age) {
 	age_ = age;
 } 
 
-void EsotericBook::accept(Visitor &v) {
-	v.visit(this);
+void EsotericBook::accept(Visitor &v, int state) {
+	v.visit(this, state);
+}
+
+string Disk::ToString(typename Disk::DiskType diskType) {
+	switch (diskType) {
+		case Disk::CD : {
+			return "CD";
+			break;
+		}
+		case Disk::DVD : {
+			return "DVD";
+			break;
+		}
+	}
+	return "";
+}
+
+string Disk::ToString(typename Disk::ContentType contentType) {
+	switch (contentType) {
+		case Disk::MUSIC : {
+			return "MUSIC";
+			break;
+		}
+		case Disk::VIDEO : {
+			return "VIDEO";
+			break;
+		}
+		case Disk::SOFTWARE : {
+			return "SOFTWARE";
+			break;
+		}
+	}
+	return "";
 }
 
 Disk::Disk(const string &name, int price, const string &barcode, DiskType diskType, ContentType contentType) :
@@ -99,8 +131,8 @@ Disk::ContentType Disk::getContentType() const {
 	return contentType_;
 }
 
-void Disk::accept(Visitor &v) {
-	v.visit(this);
+void Disk::accept(Visitor &v, int state) {
+	v.visit(this, state);
 }
 
 } /*end namespace catalog */
