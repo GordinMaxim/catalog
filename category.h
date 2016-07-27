@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "product_tree.h"
 
 namespace catalog {
 using std::vector;
@@ -11,58 +12,29 @@ using std::string;
 
 class Visitor;
 
-template <typename TComponent>
-class Category : public TComponent {
+class Category : public Component {
 public:
-	typedef typename vector<TComponent*>::iterator ChildIterator;
+	typedef vector<Component*>::iterator ChildIterator;
 
-	Category(const string &name) : name_(name) {}
-
-	string getName() const {
-		return name_;
-	}
-
-	void setName(const string &name) {
-		name_ = name;
-	}
-
-	void addChild(TComponent *child) {
-		ChildIterator it = std::find(children_.begin(), children_.end(), child);
-		if (children_.end() == it) {
-			children_.push_back(child);
-		}
-	}
-
-	ChildIterator begin() {
-		return children_.begin();
-	}
-
-	ChildIterator end() {
-		return children_.end();
-	}
-
-	void removeChild(TComponent *child) {
-		ChildIterator it = std::find(children_.begin(), children_.end(), child);
-		if (children_.end() != it) {
-			children_.erase(child);
-		}	
-	}
-
-	void clear() {
-		children_.clear();
-	}
-
-	void accept(Visitor &v, int state) {
-		// v.visit(this);
-	}
-
+    Category(const string &name);
+    string getName() const;
+    void setName(const string &name);
+    void addChild(Component *child);
+    ChildIterator begin();
+    ChildIterator end();
+    void removeChild(Component *child);
+    void clear();
+    void accept(Visitor &v, int state);
 	virtual ~Category() {}
 
 protected:
-	vector<TComponent*> children_;
+	vector<Component*> children_;
 	string name_;
 };
-
+/*
+template <>
+inline void Category<Component>::accept(Visitor &v, int state);
+*/
 } /*end namespace catalog */
 
 #endif /* _CATEGORY_H_ */

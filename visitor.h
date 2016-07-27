@@ -13,7 +13,7 @@ public:
 	virtual void visit(CookBook *, int) = 0;
 	virtual void visit(EsotericBook *, int) = 0;
 	virtual void visit(Disk *, int) = 0;
-	virtual void visit(Category<Component> *, int) = 0;
+	virtual void visit(Category *, int) = 0;
 };
 
 class PrintVisitor : public Visitor {
@@ -24,7 +24,7 @@ public:
 	void visit(CookBook *, int = 0);
 	void visit(EsotericBook *, int = 0);
 	void visit(Disk *, int = 0);
-	void visit(Category<Component> *, int = 0);
+	void visit(Category *, int = 0);
 	virtual ~PrintVisitor() {}
 
 private:

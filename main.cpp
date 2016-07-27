@@ -6,21 +6,21 @@
 using namespace catalog;
 
 int main(int argc, char **argv) {
-	Category<Component> rootCategory("Products");
-	Category<Component> bookCategory("Books");
-	Category<Component> diskCategory("Disks");
+	Category rootCategory("Products");
+	Category bookCategory("Books");
+	Category diskCategory("Disks");
 	rootCategory.addChild(&bookCategory);
 	rootCategory.addChild(&diskCategory);
 
-	Category<Component> programmingBooks("Programming books");
-	Category<Component> cookBooks("Cook books");
-	Category<Component> esotericBooks("Esoteric books");
+	Category programmingBooks("Programming books");
+	Category cookBooks("Cook books");
+	Category esotericBooks("Esoteric books");
 	bookCategory.addChild(&programmingBooks);
 	bookCategory.addChild(&cookBooks);
 	bookCategory.addChild(&esotericBooks);
 
-	Category<Component> CDDisks("CD disks");
-	Category<Component> DVDDisks("DVD disks");
+	Category CDDisks("CD disks");
+	Category DVDDisks("DVD disks");
 	diskCategory.addChild(&CDDisks);
 	diskCategory.addChild(&DVDDisks);
 

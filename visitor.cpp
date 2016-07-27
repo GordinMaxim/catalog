@@ -38,10 +38,10 @@ void PrintVisitor::visit(Disk *p, int state) {
 	os_ << " (" << diskType << ", " << contentType << ")" << std::endl;
 }
 
-void PrintVisitor::visit(Category<Component> *p, int state) {
+void PrintVisitor::visit(Category *p, int state) {
 	os_ << std::string(indentWidth_ * state, indentChar_);
 	os_ << p->getName() << std::endl;
-	for (Category<Component>::ChildIterator it = p->begin(); it != p->end(); ++it) {
+	for (Category::ChildIterator it = p->begin(); it != p->end(); ++it) {
 		(*it)->accept(*this, state + 1);
 	}
 }
