@@ -6,7 +6,7 @@
 2. Склонируйте репозиторий https://github.com/GordinMaxim/catalog.git или скачайте исходные файлы архивом
 3. В корневой директории запустите следующую последовательность команд
 	* Если вы используете CMake
-	** _cmake ._
-	** _make_
+	_cmake ._
+	_make_
 	* Если вы используете make
-	** _make -f Makefile.old_
+	_make -f Makefile.old_
